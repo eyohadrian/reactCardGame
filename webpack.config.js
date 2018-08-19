@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: ["babel-polyfill", "./src/js/main.js"],
@@ -9,7 +10,7 @@ module.exports = {
       filename: "bundle.js",
       path: __dirname + "/client"
   },
-
+  mode: "development",
   devtool: "source-map",
 
   resolve: {
@@ -50,6 +51,12 @@ module.exports = {
       new HtmlWebpackPlugin({
         template: 'src/html/index.html'
       }),
-      new LiveReloadPlugin()
+      new LiveReloadPlugin(),
+      new UglifyJsPlugin({
+        sourceMap: true,   // enable source maps to map errors (stack traces) to modules
+        uglifyOptions: {
+          mangle: false
+        }
+      })
   ]
 };

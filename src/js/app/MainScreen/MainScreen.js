@@ -21,6 +21,7 @@ class MainScreen extends React.Component {
     this.downloadImages(this.props.keyword);
   }
 
+  abc = (first, second, third) => [first, second, third];
   downloadImages = async (keyword) => {
     this.images = await this.retrieveFromApi(keyword);
     this.duplicateImages();
@@ -67,7 +68,7 @@ class MainScreen extends React.Component {
 
   render() {
     return (
-      <div class="MainScreen" >
+      <div className="MainScreen" >
         {!this.state.loading &&
           <Game
             images = {this.images}

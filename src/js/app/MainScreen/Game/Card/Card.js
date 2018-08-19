@@ -20,8 +20,7 @@ class Card extends React.Component {
     let content;
     this.props.faceUp ? content = {content: `url(${this.props.image.url})`} : content = {};
     return (
-      <span class="Card"
-        key={this.props.image.id}
+      <span className="Card"
         style={content}
         onClick = {this.onClick}
         />

@@ -74,10 +74,10 @@ class Game extends React.Component {
   loadImages = () => {
     return (this.images.map(i => {
         const faced = this.shouldCardBeFaced(i);
-        console.log(faced);
         return <Card
           image = {i}
           faceCard = {this.faceCard}
+          key = {i.id}
           faceUp = {faced}
           freezed = {this.state.is_freeze}
         />
@@ -125,7 +125,7 @@ class Game extends React.Component {
 
   render() {
     return (
-      <div class="Game">
+      <div className="Game">
         {this.loadImages()}
         {this.end()}
       </div>

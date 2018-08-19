@@ -10,7 +10,7 @@ class StartScreen extends React.Component {
 
   render() {
     return(
-      <div class="StartScreen page">
+      <div className="StartScreen page">
         <Form
         callback={this.props.getKeyword}/>
       </div>

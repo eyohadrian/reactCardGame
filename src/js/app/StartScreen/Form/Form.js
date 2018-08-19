@@ -29,9 +29,9 @@ class Form extends Component {
   }
   render() {
     return (
-      <form class="Form element" onSubmit={this.prevent}>
-        <h2 class="title">Keywords</h2>
-        <label for='keyword' class="content">
+      <form className="Form element" onSubmit={this.prevent}>
+        <h2 className="title">Keywords</h2>
+        <label htmlFor='keyword' className="content">
           <input name='keyword' onChange={this.handleKeywordChange} placeholder="Keyword" />
         </label>
 

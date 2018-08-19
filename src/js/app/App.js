@@ -28,7 +28,7 @@ class App extends Component {
   render() {
     return (
       <HashRouter>
-        <div class="App">
+        <div className="App">
           <Route
             exact path="/"
             render = {(props) =>
