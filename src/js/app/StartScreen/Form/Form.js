@@ -3,11 +3,22 @@ import { Link } from "react-router-dom";
 
 class Form extends Component {
 
+  get VISIBILITY_CLASS_NAME() {
+    return "visible";
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      keyword: ""
+      keyword: "",
+      visible: false
     };
+
+    this.showOnTimeout();
+  }
+
+  showOnTimeout = () => {
+    setTimeout(this.visible, 2000);
   }
 
   handleKeywordChange = (e) => {
@@ -24,12 +35,27 @@ class Form extends Component {
     e.preventDefault();
   }
 
-  prevent = (e) => {
-    e.preventDefault();
+  visible = () => {
+    this.changeVisibility(true);
   }
+
+  invisible = () => {
+    this.changeVisibility(false);
+  }
+
+  changeVisibility = (boolean) => {
+    this.setState({
+      visible: boolean
+    })
+  }
+
+  conditionalClassAppend = () => {
+    return this.state.visible ? this.VISIBILITY_CLASS_NAME : "";
+  }
+
   render() {
     return (
-      <form className="Form element" onSubmit={this.prevent}>
+      <form className={"Form element " + this.conditionalClassAppend()} onSubmit={this.prevent}>
         <h2 className="title">Keywords</h2>
         <label htmlFor='keyword' className="content">
           <input name='keyword' onChange={this.handleKeywordChange} placeholder="Keyword" />
