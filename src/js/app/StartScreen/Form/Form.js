@@ -18,7 +18,7 @@ class Form extends Component {
   }
 
   showOnTimeout = () => {
-    setTimeout(this.visible, 2000);
+    setTimeout(this.visible, 800);
   }
 
   handleKeywordChange = (e) => {

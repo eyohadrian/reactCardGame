@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import Card from './Card/Card';
 import YouWin from './YouWin/YouWin';
 import './game.scss';
@@ -63,6 +63,13 @@ class Game extends React.Component {
   }
 
   faceCard = (card) => {
+    const isSameCard = this.isCardInCardsFaced(card.id);
+    if (!isSameCard) {
+      this.faceCardOnNotSameCard(card);
+    }
+  }
+
+  faceCardOnNotSameCard = (card) => {
     const isAnyCardFaced = this.state.card_faced;
     if(!isAnyCardFaced) {
       this.onFirstCardFaced(card);

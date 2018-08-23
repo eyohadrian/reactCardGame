@@ -28,7 +28,7 @@ html {
     border: solid #6f7987 1px;
     box-shadow: 1px 1px 0px 1px #6ec06e;
 
-    &.visible { transition: opacity 1s ease;opacity: 1;}
+    &.visible { transition: opacity .5s ease;opacity: 1;}
     .title {
       justify-self: center;
       align-self: center;
