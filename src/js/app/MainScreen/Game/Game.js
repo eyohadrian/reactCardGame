@@ -2,6 +2,7 @@
 import Card from './Card/Card';
 import YouWin from './YouWin/YouWin';
 import './game.scss';
+import LoadingScreen from './LoadingScreen/LoadingScreen';
 
 class Game extends React.Component {
 
@@ -20,14 +21,11 @@ class Game extends React.Component {
     }
   }
 
-  async componentDidMount() {
-    this.allFacedDownWithDelay();
-  }
-
   allFacedDownWithDelay = () => {
+    console.log("time starts");
     setTimeout(() => {
       this.setState({all_faced_up: false, cards_faced: [], is_freeze:false})
-    }, 1000)
+    }, 1000);
   }
 
   onFirstCardFaced = (card) => {
@@ -64,6 +62,26 @@ class Game extends React.Component {
     this.allFacedDownWithDelay();
   }
 
+  onCardLoaded = () => {
+    this.cardLoadedCountPlusOne();
+    const condition = this.state.cards_loaded_count == 9;
+
+    if (condition === true) {
+      this.onAllCardsLoaded();
+    }
+  }
+
+  onAllCardsLoaded = async () => {
+    this.setState((state) => ({all_cards_loaded: true}));
+    await (() => { setTimeout(() => {}, 2000);})
+    console.log("timeout, done");
+    await this.allFacedDownWithDelay();
+  }
+
+  cardLoadedCountPlusOne = () => {
+    this.setState((state) => ({cards_loaded_count: state.cards_loaded_count + 1}))
+  }
+
   faceCard = (card) => {
     const isSameCard = this.isCardInCardsFaced(card.id);
     if (!isSameCard) {
@@ -86,6 +104,7 @@ class Game extends React.Component {
         return <Card
           image = {i}
           faceCard = {this.faceCard}
+          onCardLoaded = {this.onCardLoaded}
           key = {i.id}
           faceUp = {faced}
           freezed = {this.state.is_freeze}
@@ -101,6 +120,10 @@ class Game extends React.Component {
       return this.state.all_faced_up;
     }
     return condition;
+  }
+
+  shouldLoadingScreenBeenDisplayed = () => {
+      return !this.state.all_cards_loaded;
   }
 
   isCardInCardsFaced = (cardId) => {
@@ -134,6 +157,9 @@ class Game extends React.Component {
   render() {
     return (
       <div className="Game">
+        {this.shouldLoadingScreenBeenDisplayed() &&
+          <LoadingScreen />
+        }
         {this.loadImages()}
         {this.end()}
       </div>

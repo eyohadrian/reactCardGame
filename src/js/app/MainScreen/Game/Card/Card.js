@@ -22,7 +22,11 @@ class Card extends React.Component {
       <span className="Card"
         onClick = {this.onClick}
       >
-        {this.props.faceUp && <Face src={this.props.image.url}/>}
+        {this.props.faceUp &&
+          <Face
+            src={this.props.image.url}
+            onCardLoaded={this.props.onCardLoaded}
+          />}
       </span>
     )
   }

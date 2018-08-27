@@ -1,0 +1,11 @@
+.LoadingScreen {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: green;
+  opacity: .5;
+  p {
+    color: red;
+  }
+}

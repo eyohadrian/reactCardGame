@@ -1,13 +1,9 @@
 import React from 'react';
 
-export default ({src}) => {
-    const hi = () => {
-        console.log(this);
-    }
+export default ({src, onCardLoaded}) => {
     return (
-        <img 
+        <img
             src={src}
-            onLoad={hi}
-        />
+            onLoad={onCardLoaded} />
     )
 }
