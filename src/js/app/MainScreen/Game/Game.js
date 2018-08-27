@@ -10,11 +10,11 @@ class Game extends React.Component {
     this.images = props.images;
     this.start_time =  new Date();
     this.state = {
-      thereIsCardFaced: false,
-      cardsFaced: [],
-      cardsCompleted: [],
-      allFacedUp: true,
-      isFreeze: true
+      card_faced: false,
+      cards_faced: [],
+      cards_completed: [],
+      all_faced_up: true,
+      is_freeze: true
     }
   }
 
@@ -24,37 +24,37 @@ class Game extends React.Component {
 
   allFacedDownWithDelay = () => {
     setTimeout(() => {
-      this.setState({allFacedUp: false, cardsFaced: [], isFreeze:false})
+      this.setState({all_faced_up: false, cards_faced: [], is_freeze:false})
     }, 1000)
   }
 
   onFirstCardFaced = (card) => {
     this.setState({
-      thereIsCardFaced: true,
-      cardsFaced: this.state.cardsFaced.concat(card)
+      card_faced: true,
+      cards_faced: this.state.cards_faced.concat(card)
     })
   }
 
   onCardMatch = (card) => {
     this.setState({
-      cardsFaced: [],
-      cardsCompleted: this.state.cardsCompleted.concat(this.state.cardsFaced[0]).concat(card),
-      isFreeze: false,
-      thereIsCardFaced: false
+      cards_faced: [],
+      cards_completed: this.state.cards_completed.concat(this.state.cards_faced[0]).concat(card),
+      is_freeze: false,
+      card_faced: false
     })
   }
 
   onCardNotMatch = (card) => {
     this.setState({
-      thereIsCardFaced: false,
-      cardsFaced: this.state.cardsFaced.concat(card),
-      isFreeze: true
+      card_faced: false,
+      cards_faced: this.state.cards_faced.concat(card),
+      is_freeze: true
     })
     this.allFacedDownWithDelay();
   }
 
   onSecondCardFaced = (card) => {
-    const cardsMatches = this.state.cardsFaced[0].number == card.number;
+    const cardsMatches = this.state.cards_faced[0].number == card.number;
     if(cardsMatches) {
       this.onCardMatch(card);
     } else {
@@ -70,7 +70,7 @@ class Game extends React.Component {
   }
 
   faceCardOnNotSameCard = (card) => {
-    const isAnyCardFaced = this.state.thereIsCardFaced;
+    const isAnyCardFaced = this.state.card_faced;
     if(!isAnyCardFaced) {
       this.onFirstCardFaced(card);
     } else {
@@ -86,7 +86,7 @@ class Game extends React.Component {
           faceCard = {this.faceCard}
           key = {i.id}
           faceUp = {faced}
-          freezed = {this.state.isFreeze}
+          freezed = {this.state.is_freeze}
         />
       }
     ))
@@ -97,17 +97,17 @@ class Game extends React.Component {
     if (this.isCardInCardsFaced(i.id) || this.isCardInCardsCompleted(i.id)) {
       condition = true;
     } else {
-      condition = this.state.allFacedUp;
+      condition = this.state.all_faced_up;
     }
     return condition;
   }
 
   isCardInCardsFaced = (cardId) => {
-    return this.isCardInArray("cardsFaced", cardId);
+    return this.isCardInArray("cards_faced", cardId);
   }
 
   isCardInCardsCompleted = (cardId) => {
-    return this.isCardInArray("cardsCompleted", cardId);
+    return this.isCardInArray("cards_completed", cardId);
   }
 
   isCardInArray = (whichOne, cardId) => {
@@ -121,7 +121,7 @@ class Game extends React.Component {
   }
 
   end = () => {
-    if (this.state.cardsCompleted.length >= 9) {
+    if (this.state.cards_completed.length >= 9) {
       const time = new Date() - this.start_time;
       this.props.end(time)
       return (

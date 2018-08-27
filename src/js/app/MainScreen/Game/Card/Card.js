@@ -1,6 +1,6 @@
 import React from 'react';
 import './card.scss';
-import {Face} from './Face/Face'
+
 class Card extends React.Component {
   constructor(props) {
     super(props);
@@ -17,14 +17,13 @@ class Card extends React.Component {
   }
 
   render() {
-
-    let content = this.props.faceUp ? this.props.image.url : "";
-
+    let content;
+    this.props.faceUp ? content = {content: `url(${this.props.image.url})`} : content = {};
     return (
-      <div className="Card"
-        onClick = {this.onClick}>
-          {this.props.faceUp && <Face url={this.props.image.url}/>}
-      </div>
+      <span className="Card"
+        style={content}
+        onClick = {this.onClick}
+        />
     )
   }
 }
