@@ -1,9 +1,17 @@
-.Card{
+@mixin card-shape {
   width: 168px;
   height: 253px;
+  border-radius: 10px;
+}
+
+.Card {
   justify-self: center;
   background-color: green;
-  border-radius: 10px;
-  border: 2px solid #581919;
   background: linear-gradient(#512d2d, #b2afaf);
+  border: 2px solid #581919;
+  
+}
+
+.Card, .Card img {
+  @include card-shape();
 }

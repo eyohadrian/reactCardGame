@@ -14,7 +14,9 @@ class Game extends React.Component {
       cards_faced: [],
       cards_completed: [],
       all_faced_up: true,
-      is_freeze: true
+      is_freeze: true,
+      cards_loaded_count: 0,
+      all_cards_loaded: false
     }
   }
 
@@ -35,6 +37,15 @@ class Game extends React.Component {
     })
   }
 
+  onSecondCardFaced = (card) => {
+    const cardsMatches = this.state.cards_faced[0].number == card.number;
+    if(cardsMatches) {
+      this.onCardMatch(card);
+    } else {
+      this.onCardNotMatch(card);
+    }
+  }
+
   onCardMatch = (card) => {
     this.setState({
       cards_faced: [],
@@ -51,15 +62,6 @@ class Game extends React.Component {
       is_freeze: true
     })
     this.allFacedDownWithDelay();
-  }
-
-  onSecondCardFaced = (card) => {
-    const cardsMatches = this.state.cards_faced[0].number == card.number;
-    if(cardsMatches) {
-      this.onCardMatch(card);
-    } else {
-      this.onCardNotMatch(card);
-    }
   }
 
   faceCard = (card) => {
@@ -93,11 +95,10 @@ class Game extends React.Component {
   }
 
   shouldCardBeFaced = (i) => {
-    let condition;
     if (this.isCardInCardsFaced(i.id) || this.isCardInCardsCompleted(i.id)) {
-      condition = true;
+      return true;
     } else {
-      condition = this.state.all_faced_up;
+      return this.state.all_faced_up;
     }
     return condition;
   }
