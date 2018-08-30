@@ -23,9 +23,12 @@ class Game extends React.Component {
 
   allFacedDownWithDelay = () => {
     console.log("time starts");
-    setTimeout(() => {
-      this.setState({all_faced_up: false, cards_faced: [], is_freeze:false})
-    }, 1000);
+    return new Promise(res => {
+      setTimeout(() => {
+        this.setState({all_faced_up: false, cards_faced: [], is_freeze:false});
+        res("Done");
+      }, 3000);
+    });
   }
 
   onFirstCardFaced = (card) => {
@@ -73,9 +76,10 @@ class Game extends React.Component {
 
   onAllCardsLoaded = async () => {
     this.setState((state) => ({all_cards_loaded: true}));
-    await (() => { setTimeout(() => {}, 2000);})
-    console.log("timeout, done");
-    await this.allFacedDownWithDelay();
+    const msg = await new Promise((res,rej) => { setTimeout(() => {res("OK")}, 4000);})
+    console.log("timeout, done" + msg);
+    const otherMsg = await this.allFacedDownWithDelay();
+    console.log("time done " + otherMsg);
   }
 
   cardLoadedCountPlusOne = () => {
