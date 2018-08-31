@@ -6,19 +6,22 @@ import LoadingScreen from './LoadingScreen/LoadingScreen';
 
 class Game extends React.Component {
 
+  state = {
+    card_faced: false,
+    cards_faced: [],
+    cards_completed: [],
+    all_faced_up: true,
+    is_freeze: true,
+    cards_loaded_count: 0,
+    all_cards_loaded: false,
+    loadingScreenHidden: false
+  }
+
   constructor(props) {
     super(props);
     this.images = props.images;
     this.start_time =  new Date();
-    this.state = {
-      card_faced: false,
-      cards_faced: [],
-      cards_completed: [],
-      all_faced_up: true,
-      is_freeze: true,
-      cards_loaded_count: 0,
-      all_cards_loaded: false
-    }
+    this.state = this.state;
   }
 
   allFacedDownWithDelay = () => {
@@ -27,7 +30,7 @@ class Game extends React.Component {
       setTimeout(() => {
         this.setState({all_faced_up: false, cards_faced: [], is_freeze:false});
         res("Done");
-      }, 3000);
+      }, 1000);
     });
   }
 
@@ -74,12 +77,13 @@ class Game extends React.Component {
     }
   }
 
+  onLoadingScreenHidden = () => {
+    //this.setState((state) => ({loadingScreenHidden: true}));
+  }
+
   onAllCardsLoaded = async () => {
     this.setState((state) => ({all_cards_loaded: true}));
-    const msg = await new Promise((res,rej) => { setTimeout(() => {res("OK")}, 4000);})
-    console.log("timeout, done" + msg);
     const otherMsg = await this.allFacedDownWithDelay();
-    console.log("time done " + otherMsg);
   }
 
   cardLoadedCountPlusOne = () => {
@@ -127,7 +131,7 @@ class Game extends React.Component {
   }
 
   shouldLoadingScreenBeenDisplayed = () => {
-      return !this.state.all_cards_loaded;
+    return this.state.loadingScreenHidden;
   }
 
   isCardInCardsFaced = (cardId) => {
@@ -161,8 +165,11 @@ class Game extends React.Component {
   render() {
     return (
       <div className="Game">
-        {this.shouldLoadingScreenBeenDisplayed() &&
-          <LoadingScreen />
+        {!this.shouldLoadingScreenBeenDisplayed() &&
+          <LoadingScreen
+            hide = {this.state.all_cards_loaded}
+            onHidden = {this.onLoadingScreenHidden()}
+          />
         }
         {this.loadImages()}
         {this.end()}
