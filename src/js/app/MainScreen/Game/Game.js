@@ -2,7 +2,6 @@
 import Card from './Card/Card';
 import YouWin from './YouWin/YouWin';
 import './game.scss';
-import LoadingScreen from './LoadingScreen/LoadingScreen';
 
 class Game extends React.Component {
 
@@ -13,8 +12,7 @@ class Game extends React.Component {
     all_faced_up: true,
     is_freeze: true,
     cards_loaded_count: 0,
-    all_cards_loaded: false,
-    loadingScreenHidden: false
+    all_cards_loaded: false
   }
 
   constructor(props) {
@@ -77,9 +75,6 @@ class Game extends React.Component {
     }
   }
 
-  onLoadingScreenHidden = () => {
-    //this.setState((state) => ({loadingScreenHidden: true}));
-  }
 
   onAllCardsLoaded = async () => {
     this.setState((state) => ({all_cards_loaded: true}));
@@ -130,9 +125,7 @@ class Game extends React.Component {
     return condition;
   }
 
-  shouldLoadingScreenBeenDisplayed = () => {
-    return this.state.loadingScreenHidden;
-  }
+
 
   isCardInCardsFaced = (cardId) => {
     return this.isCardInArray("cards_faced", cardId);
@@ -165,12 +158,7 @@ class Game extends React.Component {
   render() {
     return (
       <div className="Game">
-        {!this.shouldLoadingScreenBeenDisplayed() &&
-          <LoadingScreen
-            hide = {this.state.all_cards_loaded}
-            onHidden = {this.onLoadingScreenHidden()}
-          />
-        }
+
         {this.loadImages()}
         {this.end()}
       </div>

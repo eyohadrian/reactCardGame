@@ -1,5 +1,6 @@
 import React from 'react';
 import Game from './Game/Game';
+import LoadingScreen from './LoadingScreen/LoadingScreen';
 import {randomBetween, formattedKeyword} from './../Utilities';
 
 class MainScreen extends React.Component {
@@ -15,7 +16,8 @@ class MainScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      loading: true,
+      loadingScreenHidden: false
     }
     this.images = [];
     this.downloadImages(this.props.keyword);
@@ -46,6 +48,14 @@ class MainScreen extends React.Component {
       });
   }
 
+  onLoadingScreenHidden = () => {
+    //this.setState((state) => ({loadingScreenHidden: true}));
+  }
+  
+  shouldLoadingScreenBeenDisplayed = () => {
+    return this.state.loadingScreenHidden;
+  }
+
   sortImagesByOrderAttr = () => {
     this.images = this.images.sort((v, n) => {
       let order = 0;
@@ -68,6 +78,12 @@ class MainScreen extends React.Component {
   render() {
     return (
       <div className="MainScreen" >
+        {!this.shouldLoadingScreenBeenDisplayed() &&
+          <LoadingScreen
+            hide = {this.state.all_cards_loaded}
+            onHidden = {this.onLoadingScreenHidden()}
+          />
+        }
         {!this.state.loading &&
           <Game
             images = {this.images}
