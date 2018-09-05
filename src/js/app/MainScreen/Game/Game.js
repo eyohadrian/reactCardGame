@@ -22,10 +22,12 @@ class Game extends React.Component {
     this.state = this.state;
   }
 
-  componentDidUpdated(prevProps) {
-    console.log(prevProps)
+  componentWillReceiveProps(newProps) {
+    if(newProps.onLoadingScreenHidden === true) {
+      
+    }
   }
-  
+
   allFacedDownWithDelay = () => {
     console.log("time starts");
     return new Promise(res => {
