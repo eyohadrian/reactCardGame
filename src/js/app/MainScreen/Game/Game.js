@@ -22,6 +22,10 @@ class Game extends React.Component {
     this.state = this.state;
   }
 
+  componentDidUpdated(prevProps) {
+    console.log(prevProps)
+  }
+  
   allFacedDownWithDelay = () => {
     console.log("time starts");
     return new Promise(res => {
@@ -101,21 +105,6 @@ class Game extends React.Component {
     }
   }
 
-  loadImages = () => {
-    return (this.images.map(i => {
-        const faced = this.shouldCardBeFaced(i);
-        return <Card
-          image = {i}
-          faceCard = {this.faceCard}
-          onCardLoaded = {this.onCardLoaded}
-          key = {i.id}
-          faceUp = {faced}
-          freezed = {this.state.is_freeze}
-        />
-      }
-    ))
-  }
-
   shouldCardBeFaced = (i) => {
     if (this.isCardInCardsFaced(i.id) || this.isCardInCardsCompleted(i.id)) {
       return true;
@@ -124,8 +113,6 @@ class Game extends React.Component {
     }
     return condition;
   }
-
-
 
   isCardInCardsFaced = (cardId) => {
     return this.isCardInArray("cards_faced", cardId);
@@ -145,6 +132,21 @@ class Game extends React.Component {
     }).reduce((i,d) => i || d);
   }
 
+  loadImages = () => {
+    return (this.images.map(i => {
+        const faced = this.shouldCardBeFaced(i);
+        return <Card
+          image = {i}
+          faceCard = {this.faceCard}
+          onCardLoaded = {this.onCardLoaded}
+          key = {i.id}
+          faceUp = {faced}
+          freezed = {this.state.is_freeze}
+        />
+      }
+    ))
+  }
+
   end = () => {
     if (this.state.cards_completed.length >= 9) {
       const time = new Date() - this.start_time;
@@ -158,7 +160,6 @@ class Game extends React.Component {
   render() {
     return (
       <div className="Game">
-
         {this.loadImages()}
         {this.end()}
       </div>

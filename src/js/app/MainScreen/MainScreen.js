@@ -49,9 +49,10 @@ class MainScreen extends React.Component {
   }
 
   onLoadingScreenHidden = () => {
-    //this.setState((state) => ({loadingScreenHidden: true}));
+    console.log("Loaded");
+    this.setState((state) => ({loadingScreenHidden: true}));
   }
-  
+
   shouldLoadingScreenBeenDisplayed = () => {
     return this.state.loadingScreenHidden;
   }
@@ -81,13 +82,14 @@ class MainScreen extends React.Component {
         {!this.shouldLoadingScreenBeenDisplayed() &&
           <LoadingScreen
             hide = {this.state.all_cards_loaded}
-            onHidden = {this.onLoadingScreenHidden()}
+            onHidden = {this.onLoadingScreenHidden}
           />
         }
         {!this.state.loading &&
           <Game
             images = {this.images}
             end = {this.props.end}
+            onLoadingScreenHidden = {this.state.loadingScreenHidden}
           />
         }
       </div>
