@@ -5,21 +5,19 @@ import './game.scss';
 
 class Game extends React.Component {
 
-  state = {
-    card_faced: false,
-    cards_faced: [],
-    cards_completed: [],
-    all_faced_up: true,
-    is_freeze: true,
-    cards_loaded_count: 0,
-    all_cards_loaded: false
-  }
-
   constructor(props) {
     super(props);
     this.images = props.images;
     this.start_time =  new Date();
-    this.state = this.state;
+    this.state = {
+      card_faced: false,
+      cards_faced: [],
+      cards_completed: [],
+      all_faced_up: true,
+      is_freeze: true,
+      cards_loaded_count: 0,
+      all_cards_loaded: false
+    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -80,7 +78,7 @@ class Game extends React.Component {
     }
   }
 
-
+// USELESS BY THE MOMENT
   onAllCardsLoaded = async () => {
     this.setState((state) => ({all_cards_loaded: true}));
     //await this.allFacedDownWithDelay();
