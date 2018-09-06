@@ -24,12 +24,11 @@ class Game extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if(newProps.onLoadingScreenHidden === true) {
-      
+      this.allFacedDownWithDelay();
     }
   }
 
   allFacedDownWithDelay = () => {
-    console.log("time starts");
     return new Promise(res => {
       setTimeout(() => {
         this.setState({all_faced_up: false, cards_faced: [], is_freeze:false});
@@ -69,7 +68,7 @@ class Game extends React.Component {
       cards_faced: this.state.cards_faced.concat(card),
       is_freeze: true
     })
-    this.allFacedDownWithDelay();
+    Promise.resolve(this.allFacedDownWithDelay());
   }
 
   onCardLoaded = () => {
@@ -84,7 +83,7 @@ class Game extends React.Component {
 
   onAllCardsLoaded = async () => {
     this.setState((state) => ({all_cards_loaded: true}));
-    const otherMsg = await this.allFacedDownWithDelay();
+    //await this.allFacedDownWithDelay();
   }
 
   cardLoadedCountPlusOne = () => {
